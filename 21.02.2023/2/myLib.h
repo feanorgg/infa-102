@@ -32,7 +32,6 @@ namespace MySpace {
                 return *this;
             }
 
-            // Array operator+ (const Array &arr1, const Array &arr2);
             Array operator+ (const Array &arr) const {
                 Array arr2(0);
                 for(int i = 0; i < length; i++) {
@@ -42,7 +41,15 @@ namespace MySpace {
                 return arr2;
             }
 
-            friend Array operator* (const Array &arr, const double &x);
+            Array operator* (const double &x) const {
+                Array arr2(0.0);
+                for(int i = 0; i < Array::Length(); i++) {
+                    arr2.data[i] = data[i] * x;
+                }
+
+                return arr2;
+            }
+
             friend Array operator* (const double &x, const Array &arr);
             friend ostream & operator<< (ostream &os, const Array &arr);
     };
@@ -67,24 +74,6 @@ namespace MySpace {
         for(int i = 0; i < length; i++) {
             data[i] = arr2.data[i];
         }
-    }
-
-    /*Array operator+ (const Array &arr1, const Array &arr2) {
-        Array arr3;
-        for(int i = 0; i < Array::Length(); i++) {
-            arr3.data[i] = arr1.data[i] + arr2.data[i];
-        }
-
-        return arr3;
-    }*/
-
-    Array operator* (const Array &arr, const double &x) {
-        Array arr2(arr);
-        for(int i = 0; i < Array::Length(); i++) {
-            arr2.data[i] *= x;
-        }
-
-        return arr2;
     }
 
     Array operator* (const double &x, const Array &arr) {
