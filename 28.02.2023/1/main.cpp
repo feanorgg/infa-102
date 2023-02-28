@@ -8,10 +8,19 @@ using std::cin;
 using std::cout;
 using namespace MySpace;
 
-Array::length = 5;
+int Array::length = 5;
 
 int main() {
-    Array arr([0, 1, 2, 3, 4]);
+    double initial_data[5] = {0, 1, 2, 3, 4};
+    Array arr(initial_data, "Object 1");
+
+    cout << arr << endl;
+
+    Array arr2(0.0, "Object 2");
+    cout << "Type in " << Array::Length() << " values for a new array:" << endl;
+    cin >> arr2;
+
+    cout << arr2 << endl;
 
     return 0;
 }

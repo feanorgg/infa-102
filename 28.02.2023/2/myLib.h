@@ -1,5 +1,5 @@
 // Галкин Иван Андреевич, 102
-// Задача к 4 семинару 2 семестра (Задания по теме 2_4.doc) - файл библиотеки к заданию 1
+// Задача к 4 семинару 2 семестра (Задания по теме 2_4.doc) - файл библиотеки к заданию 2
 
 #include <iostream>
 #include <cmath>
@@ -67,7 +67,7 @@ namespace MySpace {
         int len = strlen(def) + 1;
         name = new char[len];
         strncpy(name, def, len);
-        
+
         data = new double[length];
         for(int i = 0; i < length; i++) {
             data[i] = in;
@@ -182,4 +182,143 @@ namespace MySpace {
         name = new char[len];
         strncpy(name, str, len);
     }
+}
+
+namespace MySpace2 {
+    template <typename T>
+    class TArray {
+        private:
+            T* data;
+            char* name;
+            static int length;
+
+        public:
+            TArray() {
+                data = new T[length];
+
+                char* def = "Default";
+                int len = strlen(def) + 1;
+                name = new char[len];
+                strncpy(name, def, len);
+            }
+
+            TArray(T* initial) {
+                data = new T[length];
+                for(int i = 0; i < length; i++) {
+                    data[i] = initial[i];
+                }
+
+                char* def = "Default";
+                int len = strlen(def) + 1;
+                name = new char[len];
+                strncpy(name, def, len);
+            }
+
+            TArray(T in) {
+                data = new T[length];
+                for(int i = 0; i < length; i++) {
+                    data[i] = in;
+                }
+                
+                char* def = "Default";
+                int len = strlen(def) + 1;
+                name = new char[len];
+                strncpy(name, def, len);
+            }
+
+            TArray(T* initial, char* str) {
+                data = new T[length];
+                for(int i = 0; i < length; i++) {
+                    data[i] = initial[i];
+                }
+
+                int len = strlen(str) + 1;
+                name = new char[len];
+                strncpy(name, str, len);
+            }
+
+            TArray(T in, char* str) {
+                data = new T[length];
+                for(int i = 0; i < length; i++) {
+                    data[i] = in;
+                }
+
+                int len = strlen(str) + 1;
+                name = new char[len];
+                strncpy(name, str, len);
+            }
+
+            ~TArray() {
+                delete [] data;
+                delete [] name;
+            }
+
+            static int Length() {
+                return length;
+            }
+
+            TArray(const TArray & arr2) {
+                int len = strlen(arr2.name) + 1;
+                name = new char[len];
+                strncpy(name, arr2.name, len);
+
+                data = new T[length];
+                for(int i = 0; i < length; i++) {
+                    data[i] = arr2.data[i];
+                }
+            }
+
+            TArray & operator= (const TArray & arr) {
+                if(this == &arr) return *this;
+                for(int i = 0; i < length; i++) {
+                    data[i] = arr.data[i];
+                }
+
+                return *this;
+            }
+
+            friend TArray operator+ (const TArray &arr1, const TArray &arr2) {
+                TArray arr3;
+                for(int i = 0; i < TArray::Length(); i++) {
+                    arr3.data[i] = arr1.data[i] + arr2.data[i];
+                }
+
+                return arr3;
+            }
+
+            // Убрал перегрузку *, т. к. нет строгих инструкций для каждого типа
+            // friend TArray operator* (const TArray &arr, const double &x);
+            // friend TArray operator* (const double &x, const Array &arr);
+            friend ostream & operator<< (ostream &os, const TArray &arr) {
+                os << arr.name << ": [";
+                for(int i = 0; i < TArray::Length(); i++) {
+                    os << arr.data[i];
+                    if(i < TArray::Length() - 1) os << ", ";
+                }
+
+                os << "]";
+
+                return os;
+            }
+
+            friend istream & operator>> (istream &is, const TArray &arr) {
+                T input = 0.0;
+                for(int i = 0; i < TArray::Length(); i++) {
+                    is >> input;
+                    arr.data[i] = input;
+                }
+
+                return is;
+            }
+
+            T& operator[] (int i) {
+                return data[i];
+            }
+
+            void UpdateName(char* str) {
+                int len = strlen(str) + 1;
+                name = new char[len];
+                strncpy(name, str, len);
+            }
+    };
 }
