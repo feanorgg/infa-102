@@ -65,7 +65,29 @@ int main() {
     ifs >> arr2;
     ifs.close();
 
-    cout << arr2;
+    cout << arr2 << endl;
+
+    try {
+        cout << arr2[7];
+    }
+    catch (char* e) {
+        cout << e << endl;
+    }
+
+    try {
+        cout << arr2 / 0.0 << endl;
+    }
+    catch (char* e) {
+        cout << e << endl;
+    }
+
+    Array arr3((double)0);
+    try {
+        cin >> arr3;
+    }
+    catch (char* e) {
+        cout << e << endl;
+    }
 
     return 0;
 }

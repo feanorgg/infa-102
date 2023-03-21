@@ -72,9 +72,9 @@ namespace MySpace {
 
             double& operator[] (int i) {
                 if(i < 0) {
-                    throw "Index is out of range.";
+                    throw (char*)"Index is out of range.";
                 } else if(i >= length) {
-                    throw "Index is out of range.";
+                    throw (char*)"Index is out of range.";
                 }
 
                 return data[i];
@@ -93,7 +93,7 @@ namespace MySpace {
 
             Array operator/ (const double &x) {
                 if(x == 0) {
-                    throw "Divide by zero is forbidden.";
+                    throw (char*)"Divide by zero is forbidden.";
                 }
 
                 Array arr2;
@@ -244,8 +244,10 @@ namespace MySpace {
 
     ofstream & operator<< (ofstream &ofs, const Array &arr) {
         for(int i = 0; i < Array::Length(); i++) {
-            ofs << to_string(arr.data[i]) << endl;
+            ofs << to_string(arr.data[i]) << " ";
         }
+
+        ofs << endl;
 
         return ofs;
     }
@@ -253,12 +255,12 @@ namespace MySpace {
     istream & operator>> (istream &is, const Array &arr) {
         double input = 0.0;
         for(int i = 0; i < Array::Length(); i++) {
-            try {
-                is >> input;
+            is >> input;
+
+            if(is.fail()) {
+                throw (char*)"Input error";
             }
-            catch (exception E) {
-                throw "Input error.";
-            }
+            
             arr.data[i] = input;
         }
 
@@ -267,16 +269,16 @@ namespace MySpace {
 
     ifstream & operator>> (ifstream &ifs, const Array &arr) {
         double input = 0.0;
-        string line = "";
+        string str = "";
 
         for(int i = 0; i < Array::Length(); i++) {
-            try {
-                getline(ifs, line);
-                input = atof(line.c_str());
+            ifs >> str;
+            if(ifs.fail()) {
+                throw (char*)"Input from file error";
             }
-            catch (exception E) {
-                throw "Input error: not enough data";
-            }
+
+            input = atof(str.c_str());
+            
             arr.data[i] = input;
         }
 
