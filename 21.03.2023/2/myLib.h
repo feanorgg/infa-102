@@ -35,8 +35,8 @@ namespace MySpace {
         friend ostream& operator<< (ostream &os, const NVector& nv);
     };
 
-    NVector::NVector(double xx, double yy, char* str) {
-        SetXY(xx, yy);
+    NVector::NVector(double xx, double yy, char* str) : Vector::Vector(xx, yy) {
+        //SetXY(xx, yy);
         
         int len = strlen(str) + 1;
         name = new char[len];

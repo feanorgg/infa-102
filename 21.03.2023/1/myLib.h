@@ -10,8 +10,8 @@ namespace MySpace {
         public:
             Ac();
             Ac(int v);
-            virtual void show() = 0;
-            //void show();
+            //virtual void show() = 0;
+            void show();
     };
 
     Ac::Ac() {
@@ -32,15 +32,20 @@ namespace MySpace {
         public:
             Bc();
             Bc(int v);
-            void show() override;
+            Bc(int aa, int bb);
+            void show();
     };
 
-    Bc::Bc() {
+    Bc::Bc() : Ac::Ac() {
         b = 2;
     }
 
-    Bc::Bc(int v) {
+    Bc::Bc(int v) : Ac::Ac() {
         b = v;
+    }
+
+    Bc::Bc(int aa, int bb) : Ac::Ac(aa) {
+        b = bb;
     }
 
     void Bc::show() {
@@ -54,16 +59,22 @@ namespace MySpace {
         public:
             Cc();
             Cc(int v);
-            void show() override;
+            Cc(int aa, int bb, int cc);
+            void show();
     };
 
     Cc::Cc() {
+        
         c = 3;
     }
 
     Cc::Cc(int v) {
         c = v;
     } 
+
+    Cc::Cc(int aa, int bb, int cc) : Bc::Bc(aa, bb) {
+        c = cc;
+    }
 
     void Cc::show() {
         Bc::show();
