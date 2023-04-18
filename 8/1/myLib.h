@@ -16,12 +16,13 @@ namespace MySpace {
                 data[i] = 0.;
             }
         }
-        Array(double* initial) {
+        Array(double* initial, int __len) {
             data = new double[length];
-            int __len = sizeof(initial)/sizeof(initial[0]);
             for(int i = 0; i < length; i++) {
                 if(i >= __len) {
                     data[i] = 0.;
+                } else {
+                    data[i] = initial[i];
                 }
             }
         }
@@ -84,6 +85,9 @@ namespace MySpace {
         return os;
     }
 
+    // functional type
+    typedef double (*fun) (Array&, double);
+
     // functor class
     class Functor {
     private:
@@ -99,32 +103,11 @@ namespace MySpace {
         }
         ~Functor() { delete [] data; }
 
-        Array operator() (const Array& arr, double t) {
-            return arr;
+        Array operator() (Array& arr, double t) {
+            double r[] = {data[0](arr, t), data[1](arr, t), data[2](arr, t), data[3](arr, t)};
+            Array ret(r, 4);
+
+            return ret;
         }
     };
-
-    // functional type
-    typedef double (*fun) (Array&, double);
-
-    // functions
-    double _f1(Array& arr, double t) {
-        double ret = - arr[0] + arr[1] - arr[2] + arr[3];
-        return ret;
-    }
-
-    double _f2(Array& arr, double t) {
-        double ret = - arr[0] + arr[2] - arr[3];
-        return ret;
-    }
-
-    double _f3(Array& arr, double t) {
-        double ret = arr[0] - arr[1] + arr[3] + t/10;
-        return ret;
-    }
-
-    double _f4(Array& arr, double t) {
-        double ret = arr[0] - arr[3] - t/10;
-        return ret;
-    }
 }
