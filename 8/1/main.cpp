@@ -38,9 +38,9 @@ int main() {
     double xtest2[] = {1, 2, 3, 4};
     double xtest3[] = {4, 3, 2, 1};
 
-    Array test1(xtest1, 4);
-    Array test2(xtest2, 4);
-    Array test3(xtest3, 4);
+    Array test1 = xtest1;
+    Array test2 = xtest2;
+    Array test3 = xtest3;
 
     fun f1 = _f1;
     fun f2 = _f2;

@@ -1,10 +1,11 @@
 #include <iostream>
+#pragma once
 
+using std::cout;
+using std::endl;
 using std::ostream;
 
-namespace MySpace {
-    // simple Array class
-    class Array {
+class Array {
     private:
         double* data;
         static int length;
@@ -62,52 +63,21 @@ namespace MySpace {
 
         friend Array operator* (const double &x, const Array &arr);
         friend ostream & operator<< (ostream &os, const Array &arr);
-    };
+};
 
-    Array operator* (const double &x, const Array &arr) {
-        Array arr2(arr);
-        for(int i = 0; i < Array::Length(); i++) {
-            arr2.data[i] *= x;
-        }
-
-        return arr2;
+Array operator* (const double &x, const Array &arr) {
+    Array arr2(arr);
+    for(int i = 0; i < Array::Length(); i++) {
+        arr2.data[i] *= x;
     }
 
-    ostream & operator<< (ostream &os, const Array &arr) {
-        for(int i = 0; i < Array::Length(); i++) {
-            os << arr.data[i];
-            if(i < Array::Length() - 1) os << " ";
-        }
-        return os;
+    return arr2;
+}
+
+ostream & operator<< (ostream &os, const Array &arr) {
+    for(int i = 0; i < Array::Length(); i++) {
+        os << arr.data[i];
+        if(i < Array::Length() - 1) os << " ";
     }
-
-    // functional type
-    typedef double (*fun) (Array&, double);
-
-    // functor class
-    class Functor {
-    private:
-        fun* data;
-        static int length;
-    public:
-        Functor() {
-            data = new fun[0];
-        }
-        Functor(fun* fs) {
-            data = new fun[length];
-            data = fs;
-        }
-        ~Functor() { delete [] data; }
-
-        Array operator() (Array& arr, double t) {
-            double r[length]; // = {data[0](arr, t), data[1](arr, t), data[2](arr, t), data[3](arr, t)};
-            for(int i = 0; i < length; i++) {
-                r[i] = data[i](arr, t);
-            }
-            
-            Array ret = r;
-
-            return ret;
-        }
-    };
+    return os;
 }
